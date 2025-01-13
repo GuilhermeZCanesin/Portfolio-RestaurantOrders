@@ -1,10 +1,8 @@
-import { Router, Request, Response } from "express";
-import express from 'express';
+import { Router } from "express";
+import userRoutes from "./features/users/user.routes";
 
 const router = Router();
 
-router.get("/test", (req: Request, res: Response) => {
-    res.status(200).json({ ok: true });
-})
+router.use("/users", userRoutes)
 
-export { router };
+export default router;
