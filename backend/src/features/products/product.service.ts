@@ -1,17 +1,17 @@
 import prismaClient from "../../prisma";
 import { ProductRequestInterface } from "./product.interface";
 
-export const getProduct = async (productId: string) => {
-    const productFound = await prismaClient.product.findFirst({
+export const getProductsByCategory = async (categoryId: string) => {
+    const productsFound = await prismaClient.product.findMany({
         where: {
-            id: productId,
+            category_id: categoryId,
         },
         select: {
             id: true,
             name: true,
         }
     });
-    return productFound;
+    return productsFound;
 };
 
 export const getProducts = async () => {
@@ -43,9 +43,9 @@ export const createProduct = async (product: ProductRequestInterface) => {
         data: {
             name: product.name,
             description: product.description,
-            price: product.price,
+            price: Number(product.price),
             banner: product.banner,
-            category_id: product.category_id
+            category_id: product.category_id,
         },
         select: {
             id: true,

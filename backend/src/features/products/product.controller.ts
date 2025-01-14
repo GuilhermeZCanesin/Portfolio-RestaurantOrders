@@ -3,18 +3,17 @@ import * as productService from './product.service';
 import { ProductRequestInterface } from './product.interface';
 
 
-export const getProduct = async (req: Request, res: Response): Promise<void> => {
-    const productId = req.params.id;
-
+export const getProductsByCategory = async (req: Request, res: Response): Promise<void> => {
+    const categoryId: string = req.params.id;
     try {
-        const product = await productService.getProduct(productId);
+        const product = await productService.getProductsByCategory(categoryId);
         res.json(product);
     } catch (error) {
-        res.status(500).json({ message: 'Could not get Product!', error: (error as Error).message });
+        res.status(500).json({ message: 'Could not get Products!', error: (error as Error).message });
     }
 };
 
-export const getProducts = async (res: Response): Promise<void> => {
+export const getProducts = async (req: Request, res: Response): Promise<void> => {
     try {
         const product = await productService.getProducts();
         res.json(product);
@@ -25,6 +24,12 @@ export const getProducts = async (res: Response): Promise<void> => {
 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
     const product: ProductRequestInterface = req.body;
+    if (!req.file) {
+        throw new Error('No image provided!');
+    }
+
+    const { filename: banner } = req.file;
+    product.banner = banner;
 
     try {
         const productCreated = await productService.createProduct(product);
