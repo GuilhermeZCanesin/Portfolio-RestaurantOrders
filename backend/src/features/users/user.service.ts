@@ -23,17 +23,7 @@ export const createUser = async (user: UserRequestInterface) => {
     if (!user.name || !user.email || !user.password) {
         throw new Error('Missing data');
     }
-
-    const userAlreadyExists = await prismaClient.user.findFirst({
-        where: {
-            email: user.email
-        }
-    })
-
-    if (userAlreadyExists) {
-        throw new Error('User already exists');
-    }
-
+    await userDoesExist(user.email);
     const passwordHash = await hash(user.password, 8);
 
     const userCreated = await prismaClient.user.create({
@@ -90,4 +80,16 @@ export const authUser = async (userAuth: AuthRequestInterface) => {
         email: user.email,
         token: token
     };
+}
+
+const userDoesExist = async (userEmail: string) => {
+    const userAlreadyExists = await prismaClient.user.findFirst({
+        where: {
+            email: userEmail
+        }
+    })
+
+    if (userAlreadyExists) {
+        throw new Error('User already exists');
+    }
 }

@@ -28,17 +28,7 @@ export const createProduct = async (product: ProductRequestInterface) => {
     if (!product.name || !product.description || !product.price || !product.banner || !product.category_id) {
         throw new Error('Missing data');
     }
-
-    const productAlreadyExists = await prismaClient.product.findFirst({
-        where: {
-            name: product.name
-        }
-    })
-
-    if (productAlreadyExists) {
-        throw new Error('Product already exists');
-    }
-
+    await productExists(product.name, false);
     const productCreated = await prismaClient.product.create({
         data: {
             name: product.name,
@@ -57,6 +47,7 @@ export const createProduct = async (product: ProductRequestInterface) => {
 };
 
 export const deleteProduct = async (productId: string) => {
+    await productExists(productId, true);
     const productDeleted = await prismaClient.product.delete({
         where: {
             id: productId
@@ -65,3 +56,18 @@ export const deleteProduct = async (productId: string) => {
 
     return productDeleted;
 };
+
+const productExists = async (search: string, doesNot: boolean) => {
+    const productAlreadyExists = await prismaClient.product.findFirst({
+        where: {
+            OR: [{ name: search }, { id: search }],
+        }
+    })
+
+    if (productAlreadyExists && !doesNot) {
+        throw new Error('Product already exists');
+    } else if (!productAlreadyExists && doesNot) {
+        throw new Error('Product does not exists')
+    }
+
+}

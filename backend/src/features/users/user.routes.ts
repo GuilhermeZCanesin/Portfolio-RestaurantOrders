@@ -4,7 +4,7 @@ import { authenticate } from "../../middlewares/authentication";
 const userRoutes = Router();
 
 userRoutes.get("/", authenticate, getUsers);
-userRoutes.get("/user", authenticate, getUser);
+userRoutes.get("/info", authenticate, getUser);
 userRoutes.post("/", createUser);
 userRoutes.post("/session", authUser);
 

@@ -12,6 +12,6 @@ const upload = multer(uploadConfig.upload("./tmp"));
 productRoutes.get("/category", authenticate, getProductsByCategory);
 productRoutes.get("/", authenticate, getProducts);
 productRoutes.post("/", authenticate, upload.single('file'), createProduct);
-productRoutes.delete("/:id", authenticate, deleteProduct);
+productRoutes.delete("/", authenticate, deleteProduct);
 
 export default productRoutes;

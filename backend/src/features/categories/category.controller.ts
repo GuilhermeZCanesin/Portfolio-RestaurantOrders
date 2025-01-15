@@ -24,8 +24,7 @@ export const createCategory = async (req: Request, res: Response): Promise<void>
 };
 
 export const deleteCategory = async (req: Request, res: Response): Promise<void> => {
-    console.log('deleteCategory');
-    const categoryDeletedId: string = req.params.id;
+    const categoryDeletedId: string = req.query.id as string;
 
     try {
         const categoryDeleted = await categoryService.deleteCategory(categoryDeletedId);

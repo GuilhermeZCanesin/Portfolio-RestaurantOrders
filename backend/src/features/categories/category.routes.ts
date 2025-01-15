@@ -5,6 +5,6 @@ const categoryRoutes = Router();
 
 categoryRoutes.get("/", authenticate, getCategories);
 categoryRoutes.post("/", authenticate, createCategory);
-categoryRoutes.delete("/:id", authenticate, deleteCategory);
+categoryRoutes.delete("/", authenticate, deleteCategory);
 
 export default categoryRoutes;

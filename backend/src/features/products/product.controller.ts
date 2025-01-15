@@ -4,7 +4,7 @@ import { ProductRequestInterface } from './product.interface';
 
 
 export const getProductsByCategory = async (req: Request, res: Response): Promise<void> => {
-    const categoryId: string = req.params.id;
+    const categoryId: string = req.query.id as string;
     try {
         const product = await productService.getProductsByCategory(categoryId);
         res.json(product);
@@ -40,7 +40,7 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
 };
 
 export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
-    const productDeletedId: string = req.params.id;
+    const productDeletedId: string = req.query.id as string;
 
     try {
         const productDeleted = await productService.deleteProduct(productDeletedId);
