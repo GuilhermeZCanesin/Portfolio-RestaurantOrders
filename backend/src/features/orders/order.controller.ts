@@ -4,7 +4,20 @@ import { OrderRequestInterface } from './order.interface';
 
 
 export const getOrders = async (req: Request, res: Response): Promise<void> => {
+    const orderId: string = req.query.id as string;
+    const tableNbr: string = req.query.table as string;
+
     try {
+        if (orderId) {
+            const order = await orderService.getOrderById(orderId);
+            res.json(order);
+            return;
+        }
+        if (tableNbr) {
+            const order = await orderService.getOrdersFromTable(Number(tableNbr));
+            res.json(order);
+            return;
+        }
         const order = await orderService.getOrders();
         res.json(order);
     } catch (error) {
@@ -25,12 +38,11 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
 
 export const updateOrder = async (req: Request, res: Response): Promise<void> => {
     const order: OrderRequestInterface = req.body;
-
     try {
-        const orderCreated = await orderService.updateOrder(order);
-        res.status(201).json({ message: 'Order created successfully!', orderCreated });
+        const orderUpdated = await orderService.updateOrder(order);
+        res.status(201).json({ message: 'Order updated successfully!', orderUpdated });
     } catch (error) {
-        res.status(400).json({ message: 'Order creation failed!', error: (error as Error).message });
+        res.status(400).json({ message: 'Order update failed!', error: (error as Error).message });
     }
 };
 

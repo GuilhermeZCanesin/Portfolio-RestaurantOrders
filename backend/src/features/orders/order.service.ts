@@ -2,13 +2,40 @@ import prismaClient from "../../prisma";
 import { OrderRequestInterface } from "./order.interface";
 
 
-export const getOrders = async () => {
-    const ordersFound = await prismaClient.order.findMany({
-        select: {
-            id: true,
-            name: true,
+export const getOrderById = async (orderId: string) => {
+    const orderFound = await prismaClient.order.findFirst({
+        where: {
+            id: orderId,
+        },
+        include: {
+            items: {
+                include: {
+                    product: true
+                }
+            }
         }
-    });
+    })
+    return orderFound;
+};
+
+export const getOrdersFromTable = async (tableNbr: number) => {
+    const ordersFound = await prismaClient.order.findMany({
+        where: {
+            table: tableNbr,
+        },
+        include: {
+            items: {
+                include: {
+                    product: true
+                }
+            }
+        }
+    })
+    return ordersFound;
+};
+
+export const getOrders = async () => {
+    const ordersFound = await prismaClient.order.findMany();
     return ordersFound;
 };
 
@@ -16,7 +43,6 @@ export const createOrder = async (order: OrderRequestInterface) => {
     if (!order.table) {
         throw new Error('Missing data');
     }
-    await orderAlreadyExists(order);
     const orderCreated = await prismaClient.order.create({
         data: {
             table: order.table,
@@ -31,21 +57,22 @@ export const createOrder = async (order: OrderRequestInterface) => {
     return orderCreated;
 };
 export const updateOrder = async (order: OrderRequestInterface) => {
-    if (!order.table) {
+    if (!order.id) {
         throw new Error('Missing data');
     }
     await orderDoesNotExist(order.id);
-    const orderCreated = await prismaClient.order.update({
+    const orderUpdated = await prismaClient.order.update({
         data: {
             table: order.table,
             name: order.name,
+            draft: order.draft,
         },
         where: {
             id: order.id
         }
     })
 
-    return orderCreated;
+    return orderUpdated;
 };
 
 export const emitOrder = async (orderId: string) => {

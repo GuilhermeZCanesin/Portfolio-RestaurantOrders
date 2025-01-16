@@ -68,7 +68,7 @@ const itemDoesExist = async (item: ItemRequestInterface): Promise<Item> => {
         }
     })
     if (!itemExists) {
-        throw new Error('Item/Order not found');
+        return null;
     } else {
         return itemExists;
     }

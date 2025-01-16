@@ -1,5 +1,4 @@
 import { Router } from "express";
-import multer from "multer";
 
 import { authenticate } from "../../middlewares/authentication";
 import { createOrder, deleteOrder, getOrders, updateOrder } from "./order.controller";
