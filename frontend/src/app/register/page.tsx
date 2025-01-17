@@ -1,52 +1,47 @@
 import Image from "next/image";
-import styles from "./page.module.scss";
-import logoImg from "./../../public/logo.svg";
+import styles from "./../page.module.scss";
+import logoImg from "./../../../public/logo.svg";
 import Link from "next/link";
 
 import { api } from "@/services/api";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
-export default function Login() {
-  async function handleLogin(formData: FormData) {
+export default function Register() {
+  async function handleRegister(formData: FormData) {
     "use server"
+    const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
 
-    if (!email || !password) {
+    if (!name || !email || !password) {
       console.log("Fill all fields");
       return;
     }
 
     try {
-      const response = await api.post("/user/session", {
-        email, password
+      await api.post("/user", {
+        name, email, password
       });
-
-      if (!response.data.token) {
-        return;
-      }
-
-      const expressTime = 60 * 60 * 24 * 30 * 1000;
-      (await cookies()).set('session', response.data.token, {
-        maxAge: expressTime,
-        path: '/',
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production"
-      })
-
+      redirect("/");
     } catch (error) {
-      console.log("Error logging in: ", error);
+      console.log("Error creating account: ", error);
     }
 
-    redirect("/dashboard");
   }
+
   return (
     <>
       <div className={styles.containerCentered}>
         <Image className={styles.logo} src={logoImg} alt="Logomarca"></Image>
         <section className={styles.login}>
-          <form action={handleLogin}>
+          <h1>Let's create your account!</h1>
+          <form action={handleRegister}>
+            <input
+              type="text"
+              required
+              name="name"
+              className={styles.input}
+              placeholder="Type your name" />
             <input
               type="email"
               required
@@ -60,11 +55,11 @@ export default function Login() {
               className={styles.input}
               placeholder="Type your password" />
             <button type="submit" className={styles.button}>
-              Login
+              Register
             </button>
           </form>
-          <Link href="/register" className={styles.text}>
-            Still no account? Register now!
+          <Link href="/" className={styles.text}>
+            Already registered? Sign-in
           </Link>
         </section>
       </div>
