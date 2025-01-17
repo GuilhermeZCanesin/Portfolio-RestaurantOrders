@@ -38,7 +38,7 @@ export const authUser = async (req: Request, res: Response): Promise<void> => {
 
     try {
         const authenticatedUser = await userService.authUser(userAuth);
-        res.status(201).json({ message: 'User logged in successfully!', authenticatedUser });
+        res.status(201).json(authenticatedUser);
     } catch (error) {
         res.status(400).json({ message: 'User login failed!', error: (error as Error).message });
     }
