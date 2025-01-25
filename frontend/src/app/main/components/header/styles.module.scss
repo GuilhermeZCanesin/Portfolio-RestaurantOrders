@@ -1,0 +1,56 @@
+.headerContainer {
+    height: 5rem;
+    background-color: var(--red-900);
+
+    .headerContent {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+
+        .logo {
+            height: 5rem;
+            width: auto;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: row;
+            column-gap: 16px;
+            align-items: center;
+            color: var(--white);
+
+            a {
+                font-weight: bold;
+                text-decoration: none;
+                text-transform: uppercase;
+                transition: all 0.5s;
+
+                &:hover {
+                    color: var(--black);
+                }
+            }
+
+            button {
+                border: 0;
+                background-color: transparent;
+                margin-left: 20px;
+                display: flex;
+                transition: all 0.5s;
+
+                svg {
+                    transition: all 0.5s;
+                    stroke: var(--white);
+                }
+
+                &:hover {
+                    transform: scale(1.1);
+                    svg {
+                        stroke: var(--black);
+                    }
+                }
+            }
+        }
+    }
+}
