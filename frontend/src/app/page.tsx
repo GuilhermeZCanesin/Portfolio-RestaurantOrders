@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./page.module.scss";
+import styles from "./styles.module.scss";
 import logoImg from "./../../public/logo.svg";
 import Link from "next/link";
 
@@ -39,12 +39,12 @@ export default function Login() {
       console.log("Error logging in: ", error);
     }
 
-    redirect("/dashboard");
+    redirect("/main");
   }
   return (
     <>
       <div className={styles.containerCentered}>
-        <Image className={styles.logo} src={logoImg} alt="Logomarca"></Image>
+        <Image className={styles.logo} src={logoImg} alt="Logomarca" />
         <section className={styles.login}>
           <form action={handleLogin}>
             <input
