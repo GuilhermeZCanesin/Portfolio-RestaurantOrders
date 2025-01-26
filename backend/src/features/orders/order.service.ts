@@ -33,12 +33,13 @@ export const getOrdersFromTable = async (tableNbr: number) => {
   return ordersFound;
 };
 
-export const getOrders = async (status: boolean) => {
-  const ordersFound = await prismaClient.order.findMany({
-    where: {
-      status: status,
-    },
-  });
+export const getOrders = async (status: string) => {
+  const ordersFound =
+    status === "all"
+      ? await prismaClient.order.findMany()
+      : await prismaClient.order.findMany({
+          where: { status: Boolean(status) },
+        });
   return ordersFound;
 };
 

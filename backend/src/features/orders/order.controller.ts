@@ -18,7 +18,7 @@ export const getOrders = async (req: Request, res: Response): Promise<void> => {
       res.json(order);
       return;
     }
-    const order = await orderService.getOrders(status ? true : false);
+    const order = await orderService.getOrders(status);
     res.json(order);
   } catch (error) {
     res.status(500).json({
