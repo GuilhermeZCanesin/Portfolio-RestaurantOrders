@@ -1,12 +1,17 @@
+"use client";
+
+import { use } from "react";
 import { RefreshCwIcon } from "lucide-react";
 import styles from "./styles.module.scss";
 import { OrderPropsDTO } from "@/lib/interface/order.type";
 import { OrderModal } from "../modal";
+import { OrderContext } from "@/providers/order";
 
 interface Props {
   orders: OrderPropsDTO[];
 }
 export function Orders({ orders }: Props) {
+  const { isOpen, onRequestOpen } = use(OrderContext);
   return (
     <>
       <main className={styles.container}>
@@ -27,7 +32,7 @@ export function Orders({ orders }: Props) {
           ))}
         </section>
       </main>
-      <OrderModal />
+      {isOpen && <OrderModal />}
     </>
   );
 }

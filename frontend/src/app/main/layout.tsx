@@ -1,16 +1,15 @@
+import { OrderProvider } from "@/providers/order";
 import { Header } from "./components/header";
 
-
-
 export default function MainLayout({
-    children
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <>
-            <Header />
-            {children}
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <OrderProvider>{children}</OrderProvider>
+    </>
+  );
 }
