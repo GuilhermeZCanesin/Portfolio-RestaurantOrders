@@ -60,9 +60,22 @@
                 display: flex;
                 flex-direction: column;
                 margin: 16px 0px 0px 0px;
+
                 .description {
                     color: var(--gray-100);
                     font-style: italic;
+                }
+            }
+
+            .total {
+                padding-top: 24px;
+                display: flex;
+                justify-content: flex-end;
+                padding-top: 6px;
+                margin-top: 10px;
+                border-top: 1px dashed var(--black);
+                b {
+                    margin-right: 10px;
                 }
             }
         }
