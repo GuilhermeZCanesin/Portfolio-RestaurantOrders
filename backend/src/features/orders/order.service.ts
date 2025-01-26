@@ -70,6 +70,7 @@ export const updateOrder = async (order: OrderRequestInterface) => {
       table: order.table,
       name: order.name,
       draft: order.draft,
+      status: order.status,
     },
     where: {
       id: order.id,
