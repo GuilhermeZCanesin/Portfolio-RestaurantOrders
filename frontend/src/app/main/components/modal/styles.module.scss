@@ -1,0 +1,71 @@
+.dialogContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    backdrop-filter: blur(6px);
+
+    .dialogContent {
+        background-color: var(--dark-700);
+        margin: auto;
+        padding: 16px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        position: inherit;
+        color: var(--white);
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+
+            .dialogBack {
+                border: 0;
+                background-color: transparent;
+
+                .icon {
+                    width: 35px;
+                    height: 35px;
+                    color: var(--red-900);
+
+                }
+            }
+        }
+
+        .info {
+            width: 100%;
+            height: 100%;
+            border: 1px dashed var(--black);
+            border-radius: 8px;
+            padding: 20px 12px 12px 12px;
+            margin-bottom: 12px;
+
+            .table {
+                background-color: var(--dark-900);
+                height: 16px;
+                padding: 8px;
+                border-radius: 4px;
+            }
+
+            .details {
+                display: flex;
+                flex-direction: column;
+                margin: 16px 0px 0px 0px;
+                .description {
+                    color: var(--gray-100);
+                    font-style: italic;
+                }
+            }
+        }
+
+    }
+}
