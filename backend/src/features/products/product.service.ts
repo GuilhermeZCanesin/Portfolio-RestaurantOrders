@@ -32,7 +32,6 @@ export const createProduct = async (product: ProductRequestInterface) => {
     !product.banner ||
     !product.category_id
   ) {
-    console.log(product);
     throw new Error("Missing data");
   }
   await productExists(product.name, false);
